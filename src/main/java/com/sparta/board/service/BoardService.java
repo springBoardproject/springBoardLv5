@@ -80,8 +80,8 @@ public class BoardService {
 //            newBoardLike.setBoard(board); //외래 키 설정
             return new StatusCodesResponseDto(HttpStatus.OK.value(), "좋아요 성공!");
         }else{
-            boardLikeRepository.delete(boardLike);
-            board.removeLike(boardLike);
+//            boardLikeRepository.delete(boardLike);
+                board.removeLike(boardLike);
 //            boardLike.setBoard(board); //외래 키 설정
             return new StatusCodesResponseDto(HttpStatus.OK.value(), "좋아요 취소!");
         }

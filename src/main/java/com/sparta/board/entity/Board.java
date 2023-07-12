@@ -26,7 +26,7 @@ public class Board extends Timestamped{
     // board 삭제시 comment가 같이 삭제되도록 cascade 추가
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<BoardLike> boardLikes = new ArrayList<>();
 
     public Board(BoardRequestDto requestDto, User user) {
