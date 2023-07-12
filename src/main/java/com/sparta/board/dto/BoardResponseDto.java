@@ -16,6 +16,7 @@ public class BoardResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private List<CommentResponseDto> comments;
+    private Integer countLikes;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();
@@ -30,5 +31,6 @@ public class BoardResponseDto {
                 .map(CommentResponseDto::new)
                 .sorted(Comparator.comparing(CommentResponseDto::getCreatedAt).reversed())
                 .toList();
+        this.countLikes = board.getBoardLikes().size();
     }
 }

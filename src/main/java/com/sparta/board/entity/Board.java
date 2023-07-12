@@ -26,6 +26,8 @@ public class Board extends Timestamped{
     // board 삭제시 comment가 같이 삭제되도록 cascade 추가
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<BoardLike> boardLikes = new ArrayList<>();
 
     public Board(BoardRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
@@ -36,5 +38,12 @@ public class Board extends Timestamped{
     public void update(BoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+    }
+    public void addLike(BoardLike boardlike) {
+        this.boardLikes.add(boardlike);
+
+    }
+    public void removeLike(BoardLike boardlike){
+        this.boardLikes.remove(boardlike);
     }
 }

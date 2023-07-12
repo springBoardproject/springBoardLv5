@@ -4,7 +4,9 @@ import com.sparta.board.dto.BoardRequestDto;
 import com.sparta.board.dto.BoardResponseDto;
 import com.sparta.board.dto.StatusCodesResponseDto;
 import com.sparta.board.entity.Board;
+import com.sparta.board.entity.BoardLike;
 import com.sparta.board.entity.User;
+import com.sparta.board.repository.BoardLikeRepository;
 import com.sparta.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardLikeRepository boardLikeRepository;
 
     public BoardResponseDto createBoard(BoardRequestDto requestDto, User user) {
         Board board = new Board(requestDto, user);
@@ -65,6 +68,22 @@ public class BoardService {
 
         return new StatusCodesResponseDto(HttpStatus.OK.value(), "삭제가 완료 되었습니다.");
 
+    }
+
+    @Transactional
+    public StatusCodesResponseDto likeBoard(Long id, User user) {
+        Board board = findBoard(id);
+        BoardLike boardLike = boardLikeRepository.findByBoardAndUser(board, user).orElse(null);
+        if(boardLike==null){
+            BoardLike newBoardLike = new BoardLike(user,board);
+            board.addLike(newBoardLike);
+            newBoardLike.setBoard(board); //외래 키 설정
+            return new StatusCodesResponseDto(HttpStatus.OK.value(), "좋아요 성공!");
+        }else{
+            board.removeLike(boardLike);
+            boardLike.setBoard(board); //외래 키 설정
+            return new StatusCodesResponseDto(HttpStatus.OK.value(), "좋아요 취소!");
+        }
     }
 
     protected Board findBoard(Long id) {

@@ -3,6 +3,7 @@ package com.sparta.board.controller;
 import com.sparta.board.dto.BoardRequestDto;
 import com.sparta.board.dto.BoardResponseDto;
 import com.sparta.board.dto.StatusCodesResponseDto;
+import com.sparta.board.entity.Board;
 import com.sparta.board.entity.User;
 import com.sparta.board.jwt.JwtUtil;
 import com.sparta.board.security.UserDetailsImpl;
@@ -58,5 +59,13 @@ public class BoardController {
                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         return new ResponseEntity<>(boardService.deleteBoard(id, user), HttpStatus.OK);
+    }
+
+    //좋아요
+    @PutMapping("/{id}/like")
+    public ResponseEntity<StatusCodesResponseDto> likeBoard(@PathVariable Long id,
+                                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        return new ResponseEntity<>(boardService.likeBoard(id, user), HttpStatus.OK);
     }
 }
