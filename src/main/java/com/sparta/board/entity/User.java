@@ -30,6 +30,10 @@ public class User {
     private List<Board> boards = new ArrayList<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private  List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BoardLike> boardLikes = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private  List<CommentLike> commentLikes = new ArrayList<>();
 
 
     // service에서 중복확인, 비밀번호 암호화를 진행한뒤 값을 넣어줌

@@ -54,7 +54,7 @@ public class CommentService {
 
     }
 
-    private Comment findComment(Long id) {
+    protected Comment findComment(Long id) {
         return commentRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("존재하지 않는 댓글 입니다.")
         );
