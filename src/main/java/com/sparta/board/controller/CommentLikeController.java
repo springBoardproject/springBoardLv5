@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class CommentLikeController {
      // 생성시에는 포스트
      // 아닐때는 delete
-     private CommentLikeService commentLikeService;
+     private final CommentLikeService commentLikeService;
 
-     @PostMapping()
+     @GetMapping()
      public ResponseEntity<StatusCodesResponseDto> commentLike(@PathVariable Long commentId,
                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) {
           User user = userDetails.getUser();
